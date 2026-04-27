@@ -1,11 +1,25 @@
 #include <iostream>
-#include <sstream>
 #include "DoublyLinkedList.h"
-#include "gip_mini_catch.h"
+#include "catch.h"
 #include <string>
 #include <cstdint>  // for uintptr_t
 #include <iomanip>  // for hex formatting
 using namespace std;
+
+string findAddress(DoublyLinkedList* list, int value){
+    Node* tmp = list->getAnchor();
+        if(list->getAnchor()!= nullptr){
+        for(int i = 0; i < list->getNodesCount(); i++){
+            if(tmp->getValue() == value){
+                ostringstream oss;
+                oss << hex << reinterpret_cast<uintptr_t>(tmp);
+                return "0x" + oss.str();
+            }
+            tmp = tmp->getNext();
+        }
+    }
+    return "";
+}
 
 string findAddressOfPosition(DoublyLinkedList* list, int position){
     Node* tmp = list->getAnchor();

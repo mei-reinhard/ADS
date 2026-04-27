@@ -133,18 +133,21 @@ bool DoublyLinkedList::swap(int valueOne, int valueTwo) {
         current = current->getNext();
     }
     if (!first || !second) return false;
-    Node* tmpFirstPrev = nullptr;
-    if (first->getPrev() != nullptr) tmpFirstPrev = first->getPrev();
-    Node* tmpFirstNext = first->getNext();
 
-    if (first->getPrev() != nullptr) first->getPrev()->setNext(second);
-    first->getNext()->setPrev(second);
-    second->getPrev()->setNext(first);
-    second->getNext()->setPrev(first);
+    Node* fprev = first->getPrev();
+    Node* fnext = first->getNext();
+    Node* sprev = second->getPrev();
+    Node* snext = second->getNext();
+
+    if (fprev) fprev->setNext(second);
+    else mAnchor = second;
+    if (fnext) fnext->setPrev(second);
+    if (sprev) sprev->setNext(first);
+    if (snext) snext->setPrev(first);
 
     first->setNext(second->getNext());
     first->setPrev(second->getPrev());
-    if (tmpFirstPrev != nullptr)second->setPrev(tmpFirstPrev);
-    second->setNext(tmpFirstNext);
+    second->setNext(fnext);
+    second->setPrev(fprev);
     return true;
 }
