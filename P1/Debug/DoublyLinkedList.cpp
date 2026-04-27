@@ -29,12 +29,15 @@ int DoublyLinkedList::getFront(){
     if(mAnchor != nullptr){
         return mAnchor->getValue();
     }
+    return -1;
 }
 
 /**
  * Getter für den Wert der letzten Node
  */
 int DoublyLinkedList::getBack(){
+    if (mAnchor == nullptr)
+            return -1;
     Node* tmp = mAnchor;
     for(int i = 0; i < mNodesCount; i++){
         if(tmp->getNext() == nullptr){
@@ -42,6 +45,7 @@ int DoublyLinkedList::getBack(){
         }
         tmp = tmp->getNext();
     }
+    return tmp->getValue();
 }
 
 /**
@@ -52,19 +56,19 @@ void DoublyLinkedList::addNode(int value){
     Node* tmp = mAnchor;
     if(mAnchor == nullptr){
         mAnchor = newNode;
-        newNode->setNext(nullptr);
-        newNode->setPrev(nullptr);
         mNodesCount++;
+        return;
     }
     else if(!search(value)){
-        for(int i = 0; i < mNodesCount; i++){
+        for(int i = 0; i < mNodesCount; i++) {
             if(tmp->getNext() == nullptr){
-                tmp->getNext()->setNext(newNode);
+                tmp->setNext(newNode);
                 newNode->setPrev(tmp);
+                mNodesCount++;
                 return;
             }
             tmp = tmp->getNext();
-        
+        }
     }
 }
 /**
@@ -75,12 +79,12 @@ bool DoublyLinkedList::search(int value){
     if(mAnchor != nullptr){
         for(int i = 0; i < mNodesCount; i++){
             if(search->getValue() == value){
-                return false;
+                return true;
             }
             search = search->getNext();
         }
     }
-    return true;
+    return false;
 }
 
 /**
@@ -96,10 +100,12 @@ bool DoublyLinkedList::deleteValue(int value){
             if(tmp->getValue() == value){
                 if(tmp->getPrev())
                     tmp->getPrev()->setNext(tmp->getNext());
+                else
+                    mAnchor = tmp->getNext();
                 if(tmp->getNext())
                     tmp->getNext()->setPrev(tmp->getPrev());
                 delete tmp;
-                mNodesCount;
+                mNodesCount--;
                 return true;
                 
             }
@@ -113,7 +119,8 @@ bool DoublyLinkedList::deleteValue(int value){
  * Vertauscht zwei Nodes basierend auf ihren Werten
  */
 bool DoublyLinkedList::swap(int valueOne, int valueTwo) {
-    if (valueOne == valueTwo || mNodesCount < 2) return false;
+    if (valueOne == valueTwo || mNodesCount < 2)
+        return false;
 
     Node* first = nullptr;
     Node* second = nullptr;
@@ -121,17 +128,23 @@ bool DoublyLinkedList::swap(int valueOne, int valueTwo) {
 
     // Find both nodes
     while (current) {
-        if (current->getValue() == valueOne) first = current;
-        else if (current->getValue() == valueTwo) second = current;
+        if (current->getValue() == valueOne && !first) first = current;
+        else if (current->getValue() == valueTwo && !second) second = current;
         current = current->getNext();
     }
-
     if (!first || !second) return false;
+    Node* tmpFirstPrev = nullptr;
+    if (first->getPrev() != nullptr) tmpFirstPrev = first->getPrev();
+    Node* tmpFirstNext = first->getNext();
 
-    int temp = first->getValue();
-    first->setValue(second->getValue());
-    mNodesCount++;
-    second->setValue(temp);
+    if (first->getPrev() != nullptr) first->getPrev()->setNext(second);
+    first->getNext()->setPrev(second);
+    second->getPrev()->setNext(first);
+    second->getNext()->setPrev(first);
 
+    first->setNext(second->getNext());
+    first->setPrev(second->getPrev());
+    if (tmpFirstPrev != nullptr)second->setPrev(tmpFirstPrev);
+    second->setNext(tmpFirstNext);
     return true;
 }

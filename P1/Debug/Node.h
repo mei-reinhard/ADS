@@ -8,7 +8,7 @@ class Node{
 
     public:
         Node();
-        
+        Node(int value);
         int getValue(); // Gibt den Wert des Knotens aus
         Node* getNext(); // Gibt den Nachfolger des Knotens aus
         Node* getPrev(); // Gibt den Vorgänger des Knotens aus

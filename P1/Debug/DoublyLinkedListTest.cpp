@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "DoublyLinkedList.h"
 #include "gip_mini_catch.h"
 #include <string>
