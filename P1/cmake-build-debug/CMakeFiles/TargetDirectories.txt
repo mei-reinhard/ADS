@@ -1,3 +1,0 @@
-/Users/mei/Desktop/FHA/FS2/ADS/Prakt/P1/cmake-build-debug/CMakeFiles/P1.dir
-/Users/mei/Desktop/FHA/FS2/ADS/Prakt/P1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/mei/Desktop/FHA/FS2/ADS/Prakt/P1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
