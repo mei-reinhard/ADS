@@ -61,6 +61,7 @@ void DoublyLinkedList::addNode(int value){
             if(tmp->getNext() == nullptr){
                 tmp->getNext()->setNext(newNode);
                 newNode->setPrev(tmp);
+                mNodesCount++;
                 return;
             }
             tmp = tmp->getNext();
