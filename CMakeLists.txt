@@ -13,3 +13,5 @@ add_executable(Prakt
         P1/Debug/main.cpp
         P1/Debug/Node.cpp
         P1/Debug/Node.h)
+
+target_link_libraries(Prakt PRIVATE -Wl,--whole-archive test_file_lib -Wl,--no-whole-archive)
