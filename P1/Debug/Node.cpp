@@ -36,7 +36,7 @@ Node* Node::getPrev(){
 /**
  * Setter für Wert der Node
  */
-void Node::Node(int value){
+void Node::setValue(int value){
     this->mValue = value;
 }
 /**

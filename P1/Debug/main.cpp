@@ -3,6 +3,6 @@
 int main() {
 
     Catch::Session().run();
-    system("pause");
+    // system("pause");
     return 0;
 }
