@@ -44,7 +44,7 @@ int DoublyLinkedList::getBack(){
         }
         tmp = tmp->getNext();
     }
-    return -99999;
+    return tmp->getValue();
 }
 
 /**
@@ -55,9 +55,8 @@ void DoublyLinkedList::addNode(int value){
     Node* tmp = mAnchor;
     if(mAnchor == nullptr){
         mAnchor = newNode;
-        newNode->setNext(nullptr);
-        newNode->setPrev(nullptr);
         mNodesCount++;
+        return;
     }
     else if(!search(value)){
         for(int i = 0; i < mNodesCount; i++) {
@@ -107,6 +106,7 @@ bool DoublyLinkedList::deleteValue(int value){
                 }
                 else if (tmp->getNext() != nullptr && tmp->getPrev() == nullptr) {
                     tmp->getNext()->setPrev(nullptr);
+                    mAnchor = tmp->getNext();
                 }
 
                 delete tmp;
@@ -139,13 +139,50 @@ bool DoublyLinkedList::swap(int valueOne, int valueTwo) {
 
     if (!first || !second) return false;
 
-    int temp = first->getValue();
-    first->setValue(second->getValue());
-    mNodesCount++;
-    second->setValue(temp);
+    Node* tmpFirstPrev = first->getPrev();
+    Node* tmpFirstNext = first->getNext();
+    Node* tmpSecondPrev = second->getPrev();
+    Node* tmpSecondNext = second->getNext();
 
+    if (tmpFirstPrev) first->getPrev()->setNext(second);
+    else mAnchor = second;
+    if (tmpFirstNext) first->getNext()->setPrev(second);
+    if (tmpSecondPrev) second->getPrev()->setNext(first);
+    if (tmpSecondNext) second->getNext()->setPrev(first);
+
+    if (first->getPrev() == second || first->getNext() == second) {
+        if (first->getNext() == second) {
+            first->setPrev(second);
+            second->setNext(first);
+        }
+        else {
+            first->setNext(second);
+            second->setPrev(first);
+        }
+    }
+    else {
+        first->setNext(tmpSecondNext);
+        first->setPrev(tmpSecondPrev);
+        second->setNext(tmpFirstNext);
+        second->setPrev(tmpFirstPrev);
+    }
     return true;
 }
 
 void DoublyLinkedList::replace(int valueOne, int valueTwo) {
+    if (!search(valueTwo) && mAnchor != nullptr) {
+        Node* tmp = mAnchor;
+        Node* newNode = new Node(valueTwo);
+        while (tmp) {
+            if (tmp->getValue() == valueOne) {
+                if (tmp->getPrev()) tmp->getPrev()->setNext(newNode);
+                else mAnchor = newNode;
+                if (tmp->getNext()) tmp->getNext()->setPrev(newNode);
+                newNode->setNext(tmp->getNext());
+                newNode->setPrev(tmp->getPrev());
+                return;
+            }
+            tmp = tmp->getNext();
+        }
+    }
 };
