@@ -135,3 +135,6 @@ bool DoublyLinkedList::swap(int valueOne, int valueTwo) {
 
     return true;
 }
+
+bool replace(int valueOne, int valueTwo) {
+};
