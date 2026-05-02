@@ -3,7 +3,7 @@ project(Prakt)
 
 set(CMAKE_CXX_STANDARD 14)
 
-include_directories(P1Template/Debug)
+include_directories(P1/Debug)
 
 add_executable(Prakt
         P1/Debug/DoublyLinkedList.cpp
