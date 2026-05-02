@@ -8,7 +8,7 @@ class Node{
 
     public:
         Node();
-        Node(int value);
+        Node(int value); //FEHLER: Prototyp in .h hat gefehlt
 
         int getValue(); // Gibt den Wert des Knotens aus
         Node* getNext(); // Gibt den Nachfolger des Knotens aus

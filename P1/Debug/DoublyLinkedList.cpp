@@ -29,7 +29,7 @@ int DoublyLinkedList::getFront(){
     if(mAnchor != nullptr){
         return mAnchor->getValue();
     }
-    return -99999;
+    return -99999; //FEHLER nicht jeder Pfad hatte ein return
 }
 
 /**
@@ -44,7 +44,7 @@ int DoublyLinkedList::getBack(){
         }
         tmp = tmp->getNext();
     }
-    return tmp->getValue();
+    return tmp->getValue(); //FEHLER nicht jeder Pfad hatte ein return
 }
 
 /**
@@ -55,6 +55,7 @@ void DoublyLinkedList::addNode(int value){
     Node* tmp = mAnchor;
     if(mAnchor == nullptr){
         mAnchor = newNode;
+        //FEHLER: newNode Next und Prev muessen nicht auf nullptr gesetzt werden
         mNodesCount++;
         return;
     }
@@ -63,7 +64,7 @@ void DoublyLinkedList::addNode(int value){
             if(tmp->getNext() == nullptr){
                 tmp->setNext(newNode);
                 newNode->setPrev(tmp);
-                mNodesCount++;
+                mNodesCount++; //FEHLER: mNodeCount wurde NICHT geupdatet
                 return;
             }
             tmp = tmp->getNext();
@@ -78,12 +79,12 @@ bool DoublyLinkedList::search(int value){
     if(mAnchor != nullptr){
         for(int i = 0; i < mNodesCount; i++){
             if(search->getValue() == value){
-                return true;
+                return true; //FEHLER: wenn Wert bereits da ist, sollte true returned werden
             }
             search = search->getNext();
         }
     }
-    return false;
+    return false; //FEHLER: Umkehrschluss von voherigem Fehler
 }
 
 /**
@@ -108,9 +109,9 @@ bool DoublyLinkedList::deleteValue(int value){
                     tmp->getNext()->setPrev(nullptr);
                     mAnchor = tmp->getNext();
                 }
-
+                //FEHLER: nicht alle Faelle fuer Nullptr wurden richtig abgedeckt + Anker wurde vergessen
                 delete tmp;
-                mNodesCount--;
+                mNodesCount--;//FEHLER: -- wurde vergessen
                 return true;
                 
             }
@@ -138,6 +139,7 @@ bool DoublyLinkedList::swap(int valueOne, int valueTwo) {
     }
 
     if (!first || !second) return false;
+    //FEHLER: hat Werte und nicht Nodes getauscht
 
     Node* tmpFirstPrev = first->getPrev();
     Node* tmpFirstNext = first->getNext();

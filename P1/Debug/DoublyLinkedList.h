@@ -16,6 +16,7 @@ class DoublyLinkedList{
 
         bool swap(int valueOne, int valueTwo); // Knoten in der Liste vertauschen
         void replace(int valueOne, int valueTwo); //Knoten in der Liste ersetzen
+        //FEHLER replace hat in beiden Datein gefehlt
 
         int getNodesCount(); // Größe der Lise (Anzahl der Knoten)
         Node* getAnchor(); // Gibt den Pointer auf die erste Node aus
